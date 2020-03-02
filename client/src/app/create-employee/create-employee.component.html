@@ -1,0 +1,140 @@
+<h5 class="font-weight-bold">New Medical Record</h5>
+<div>
+  <form [formGroup]="medicalRecordForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" required formControlName="firstName" name="firstName"
+                   [ngClass]="{ 'is-invalid': submitted && formField.firstName.errors }">
+          </div>
+        </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastName" required formControlName="lastName"  name="lastName"
+                 [ngClass]="{ 'is-invalid': submitted && formField.lastName.errors }">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="form-group custom-control custom-radio">
+              <input id="male" type="radio" class="form-control custom-control-input" value="MALE" name="gender" formControlName="gender"
+                     [ngClass]="{ 'is-invalid': submitted && formField.gender.errors }">
+              <label class="custom-control-label" for="male">Male</label>
+            </div>
+          </div>
+          <div class="form-group col-lg-3 col-md-3 col-sm-3">
+            <div class="custom-control custom-radio">
+              <input id="female" type="radio" class="form-control custom-control-input" value="FEMALE" name="gender" formControlName="gender"
+                     [ngClass]="{ 'is-invalid': submitted && formField.gender.errors }">
+              <label class="custom-control-label" for="female">Female</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" min="0" max="150" class="form-control" id="age" formControlName="age" name="age"
+                 [ngClass]="{ 'is-invalid': submitted && formField.age.errors }"
+                 oninput="javascript: if (parseInt(this.value.length) <0) this.value = '' ">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="country">Country</label>
+          <select class="form-control"  id="country"  formControlName="country" (change)="changeCountry($event.target.value)"
+                  [ngClass]="{ 'is-invalid': submitted && formField.country.errors }">
+            <option>--Choose Country--</option>
+            <option *ngFor="let country of countries">{{country.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group">
+          <label for="city">City</label>
+          <select formControlName="city" class="form-control" id="city"
+                  [ngClass]="{ 'is-invalid': submitted && formField.city.errors }">
+            <option>--Choose City--</option>
+            <option *ngFor="let city of cities">{{city}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group">
+          <label>Living with diabetes?</label>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="form-group custom-control custom-radio">
+              <input id="yes" type="radio" class="form-control custom-control-input" value="YES" name="diabetesStatus" formControlName="diabetesStatus"
+                     [ngClass]="{ 'is-invalid': submitted && formField.diabetesStatus.errors }">
+              <label class="custom-control-label" for="yes">Yes</label>
+            </div>
+          </div>
+          <div class="form-group col-lg-3 col-md-3 col-sm-3">
+            <div class="custom-control custom-radio">
+              <input id="no" type="radio" class="form-control custom-control-input" value="NO" name="diabetesStatus" formControlName="diabetesStatus"
+                     [ngClass]="{ 'is-invalid': submitted && formField.diabetesStatus.errors }">
+              <label class="custom-control-label" for="no">No</label>
+            </div>
+          </div>
+          <div class="form-group col-lg-3 col-md-3 col-sm-3">
+            <div class="custom-control custom-radio">
+              <input id="unknown" type="radio" class="form-control custom-control-input" value="UNKNOWN" name="diabetesStatus" formControlName="diabetesStatus"
+                     [ngClass]="{ 'is-invalid': submitted && formField.diabetesStatus.errors }">
+              <label class="custom-control-label" for="unknown">Unknown</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="text-right">
+      <button type="submit" class="btn btn-success" >Save</button>
+    </div>
+  </form>
+</div>
+<hr style="color: black">
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <h5 class="font-weight-bold">List of medical records</h5>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6 text-right">
+        <div class="custom-control custom-checkbox">
+          <input id="onlyMinors" type="checkbox" class="form-control custom-control-input" [(ngModel)]="showMinorsOnly" (change)="filterForMinors($event.target.checked)">
+          <label class="custom-control-label" for="onlyMinors">Only minors</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Find Medical Record" *ngIf="employees!=null" [(ngModel)]="term">
+    </div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let employee of employees | async | filter: term">
+        <td>{{employee.firstName}} {{employee.lastName}} ({{employee.gender}}), {{employee.age}}-{{employee.country}}({{employee.city}})</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
