@@ -25,10 +25,12 @@ Also makes maintenance easier and focused.
 
 ##How to run
 1. Clone the repo
+
 ####### Running server
 1. Navigate to the server-folder but running command "cd server" from the root folder
 2. Run ./mvnw spring-boot:run
 3. Server will run on port 8080
+
 ####### Running web application
 1. Navigate to the web app folder by running command "cd client" from the root folder
 2. Run command npm install && npm start
