@@ -24,7 +24,7 @@ Also makes maintenance easier and focused.
 4. Angular was used to decouple front end and backend and laos to benefit from its inherent asynchronous processing power. 
 
 ##How to run
-1. Clone the report
+1. Clone the repo
 ####### Running server
 1. Navigate to the server-folder but running command "cd server" from the root folder
 2. Run ./mvnw spring-boot:run
